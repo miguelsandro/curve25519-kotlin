@@ -1,0 +1,48 @@
+buildscript {
+  ext.kotlin_version = '1.1.2-2'
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = 'lsis.Axlsign_benchKt'
+
+defaultTasks 'run'
+
+repositories {
+  mavenCentral()
+  // Spek
+  maven { url "http://dl.bintray.com/jetbrains/spek" }  
+}
+
+dependencies {
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  testCompile 'junit:junit:4.12'
+  testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    
+  // test Spek
+  testCompile("org.jetbrains.spek:spek-api:1.1.0-beta3",{
+	exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib"
+  })
+  testCompile("org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta3",{
+	exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib"
+  })
+  testCompile("org.junit.platform:junit-platform-runner:1.0.0-M3",{
+	exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib"
+  })
+
+  testCompile("com.nhaarman:mockito-kotlin:1.3.0",{
+	exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib"
+  })  
+  
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "3.5"
+}
