@@ -28,10 +28,10 @@ Signs the given message using the private key and returns signature.
 Optional random data argument (which must have 64 random bytes) turns on
 hash separation and randomization to make signatures non-deterministic.
 
-### verify(publicKey, message, signature) -> true | false
+### verify(publicKey, message, signature) -> 1 | 0
 
 Verifies the given signature for the message using the given private key.
-Returns `true` if the signature is valid, `false` otherwise.
+Returns `1` if the signature is valid, `0` otherwise.
 
 ### signMessage(privateKey, message, [random]) -> signedMessage
 
@@ -51,21 +51,6 @@ without signature if it's correct or `null` if verification fails.
 Returns a raw shared key between own private key and peer's public key (in
 other words, this is an ECC Diffie-Hellman function X25519, performing
 scalar multiplication).
-
-The result should not be used directly as a key, but should be processed with a
-one-way function (e.g. *HSalsa20* as in NaCl, or any secure cryptographic hash
-function, such as *SHA-256*, or key derivation function, such as *HKDF*).
-
-## How is it different from Ed25519?
-
-Axlsign allows calculating key agreement and signing using just a single
-X25519 key instead of two different X25519 and Ed25519 keys.
-
-It uses keys in X25519 format (Montgomery), while Ed25519 uses keys in a
-different representation (Twisted Edwards). Internally, it converts keys to the
-correct format, but since such conversion would lose a sign bit, it also embeds
-the sign bit from public key into signature during signing, and puts it back
-into the key during verification.
 
 ## Credits
 
